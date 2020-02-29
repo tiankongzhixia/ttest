@@ -5,7 +5,7 @@ import java.util.Properties;
 
 /**
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-02-27 05:49
  */
 public class TTestProperties extends Properties {

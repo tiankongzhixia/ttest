@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 /**
  * 断言注解 默认只校验 assertEquals
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-02-25 21:13
  */
 @Retention(RetentionPolicy.RUNTIME)

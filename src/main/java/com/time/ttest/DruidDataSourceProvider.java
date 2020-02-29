@@ -12,7 +12,7 @@ import java.util.Properties;
 
 /**
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  */
 public class DruidDataSourceProvider implements Provider<DataSource> {
     private DruidDataSource dataSource = new DruidDataSource();

@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * Unirest 初始化 加载@Login配置文件
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-02-23 17:05
  */
 public class UnirestInitializerListener implements ApplicationListener<ApplicationStartedEvent>{

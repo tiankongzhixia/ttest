@@ -4,7 +4,7 @@ import java.io.PrintStream;
 
 /**
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-02-24 09:36
  */
 public class TTestBanner implements Banner {

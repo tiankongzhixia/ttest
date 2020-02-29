@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-02-23 17:00
  */
 public class ApplicationRunningEvent extends TTestApplicationEvent {
