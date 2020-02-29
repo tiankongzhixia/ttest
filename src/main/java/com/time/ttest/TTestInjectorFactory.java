@@ -21,7 +21,7 @@ public class TTestInjectorFactory implements org.testng.IInjectorFactory {
             if (module instanceof TTestModule){
                 return injector;
             }else {
-                return injector.createChildInjector(module);
+                injector =  injector.createChildInjector(module);
             }
         }
         return injector;
