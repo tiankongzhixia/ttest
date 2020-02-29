@@ -116,11 +116,6 @@ public class TTestReportListener implements ApplicationListener<ApplicationRepor
             tTestResult.setSkippedTestsCount((int) tTestMethods.stream()
                     .filter(method -> method.getStatus() == ReportStatus.SKIP)
                     .map(TTestMethod::getStatus).count());
-            tTestResult.setOtherTestsCount((int) tTestMethods.stream().filter(
-                    method -> method.getStatus() != ReportStatus.SKIP
-                    && method.getStatus() != ReportStatus.FAILURE &&
-                    method.getStatus() != ReportStatus.SUCCESS)
-                    .map(TTestMethod::getStatus).count());
             tTestResult.setDurationTime(tTestMethods.stream().mapToLong(TTestMethod::getDurationTime).sum());
             try {
                 AttributesUtil.setAllureAnnotation(tTestResult,annotations);

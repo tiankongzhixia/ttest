@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * mapper扫描注解
- * 根据该注解不同的数据库注入不同的mapper
+ * 根据不同的数据库注入不同的mapper
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

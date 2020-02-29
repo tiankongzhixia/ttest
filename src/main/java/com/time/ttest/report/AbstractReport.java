@@ -57,10 +57,6 @@ public abstract class AbstractReport extends Attributes implements Report {
      */
     private Integer skippedTestsCount;
 
-    /**
-     * 其他用例数
-     */
-    private Integer otherTestsCount;
 
     public void setAttributes(Map<String, Object> attributes){
         attributes.forEach(this::setAttribute);
