@@ -92,34 +92,6 @@ public class TTestApplication{
         properties.setProperty("package",clazz.getPackage().getName());
         TestNG testNG = new TestNG();
         CommandLineArgs cla = commandLineArgs(properties,args);
-//        OverrideProcessor processor = (OverrideProcessor) TestNgUtil.invokeTestNGMethod("getProcessor",null,testNG, (Object[]) null);
-//        try {
-//            Collection<XmlSuite> allXmlSuites = getAllXmlSuites(getTestNgSuitFiles(properties, cla.suiteFiles),processor,clazz);
-//            List<XmlSuite> suites = Lists.newArrayList();
-//            for (XmlSuite xmlSuite : allXmlSuites) {
-//                if (cla.parallelMode != null) {
-//                    xmlSuite.setParallel(cla.parallelMode);
-//                }
-//                if (cla.threadCount > 0) {
-//                    xmlSuite.setThreadCount(cla.threadCount);
-//                }
-//                if (cla.testName == null) {
-//                    suites.add(xmlSuite);
-//                    continue;
-//                }
-//                // If test names were specified, only run these test names
-//                TestNamesMatcher testNamesMatcher = new TestNamesMatcher(xmlSuite, Arrays.asList(cla.testNames.split(",")));
-//                List<String> missMatchedTestname = testNamesMatcher.getMissMatchedTestNames();
-//                if (!missMatchedTestname.isEmpty()) {
-//                    throw new TestNGException("The test(s) <" + missMatchedTestname + "> cannot be found.");
-//                }
-//                suites.addAll(testNamesMatcher.getSuitesMatchingTestNames());
-//
-//            }
-//            testNG.setXmlSuites(suites);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         try {
             testNG.setTestSuites(cla.suiteFiles);
             TestNgUtil.invokeTestNGMethod("validateCommandLineParameters",new Class[]{CommandLineArgs.class},testNG,cla);
@@ -136,37 +108,27 @@ public class TTestApplication{
         return testNG;
     }
 
-//    private static Collection<XmlSuite> getAllXmlSuites(List<String> testNgSuitFiles, OverrideProcessor processor,Class clazz) {
-//        Collection<XmlSuite> xmlSuiteCollection = new ArrayList<>();
-//        testNgSuitFiles.forEach(file->{
-//            try {
-//                xmlSuiteCollection.addAll(Parser.parse(clazz.getResourceAsStream(file),processor));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//        return xmlSuiteCollection;
-//    }
-
-
     private static CommandLineArgs commandLineArgs(Properties properties,String... args){
         CommandLineArgs cla = new CommandLineArgs();
         JCommander jCommander = new JCommander(cla);
         jCommander.parse(args);
         //添加配置的suit xml 并去重
-        cla.suiteFiles = getTestNgSuitFiles(properties,cla.suiteFiles);
+        cla.suiteFiles = cla.suiteFiles.size()>0?cla.suiteFiles:getTestNgSuitFiles(properties);
         //添加 guice InjectorFactory
         cla.dependencyInjectoryFactoryClass = TTestInjectorFactory.class.getName();
         return cla;
     }
 
-    private static List<String> getTestNgSuitFiles(Properties properties,List<String> testNGSuiteFiles){
-        if (testNGSuiteFiles.size() > 0){
-            return testNGSuiteFiles;
-        }
+    /**
+     *  获取配置文件的 suitefile
+     * @param properties 配置文件参数
+     * @return
+     */
+    private static List<String> getTestNgSuitFiles(Properties properties){
+        List<String> suiteFiles = Lists.newArrayList();
         String[] ttestSuiteFiles =properties.getProperty("testng.suite.file").split(",");
-        testNGSuiteFiles.addAll(Arrays.asList(ttestSuiteFiles));
-        testNGSuiteFiles = testNGSuiteFiles.stream().distinct().collect(Collectors.toList());
-        return testNGSuiteFiles;
+        suiteFiles.addAll(Arrays.asList(ttestSuiteFiles));
+        suiteFiles = suiteFiles.stream().distinct().collect(Collectors.toList());
+        return suiteFiles;
     }
 }
