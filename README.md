@@ -1,5 +1,4 @@
 # TTest 轻量级测试框架
----
 结合Testng+Mybatis+Guice+Unirest完成的测试框架,可以快速结合业务开展自动化测试工作。
 
 使用Druid连接池,支持多数据源。
