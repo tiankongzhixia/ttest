@@ -44,12 +44,3 @@ testng:
   suite:
     file: /Users/***/test-demo/src/main/resources/test1.xml,/Users/***/test-demo/src/main/resources/test2.xml
 ```
-
-
-
-
-
-
-
-
-[]: https://www.yuque.com/aywcrg/gsym2g/orzdrb
