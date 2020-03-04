@@ -16,7 +16,7 @@
    <dependency>
        <groupId>com.timemf</groupId>
        <artifactId>t-test</artifactId>
-       <version>1.0.0</version>
+       <version>1.0.1</version>
    </dependency> 
 ```
 
@@ -25,7 +25,7 @@
 需要在Run/Debug Configuration -> Testng running params添加参数
 
 ```
-    -dependencyinjectorfactory com.ttest.TTestInjectorFactory
+    -dependencyinjectorfactory com.time.ttest.TTestInjectorFactory
 ```
 
 #### 三、添加Guice注解
