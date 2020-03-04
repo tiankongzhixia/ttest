@@ -10,5 +10,15 @@ import lombok.Data;
 @Data
 public class TTestMethod extends AbstractReport{
 
+    /**
+     * 是否重试
+     */
+    private boolean retried;
+
+    /**
+     * 所属组
+     */
+    private String[] groups;
+
     private Throwable throwable;
 }

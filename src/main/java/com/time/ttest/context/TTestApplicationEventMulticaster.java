@@ -26,11 +26,11 @@ public class TTestApplicationEventMulticaster extends AbstractApplicationEventMu
     private Set<ApplicationListener<?>> getApplicationListeners(ApplicationEvent event) {
         Set<ApplicationListener<?>> listeners = new LinkedHashSet<>();
         this.getListeners().forEach(listener -> {
-            //判断 listener 实现的 listener<event> event类型是否一致
+            //判断 listener 实现的 listener<event> event类型是否一致 或者是子类
             ParameterizedType parameterizedType = (ParameterizedType) listener.getClass().getGenericInterfaces()[0];
             Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
             Class clazz = (Class) actualTypeArguments[0];
-            if (clazz == event.getClass()){
+            if (clazz == event.getClass() || clazz.isAssignableFrom(event.getClass())){
                 listeners.add(listener);
             }
         });

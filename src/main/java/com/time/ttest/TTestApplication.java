@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TTestApplication{
     private static final String FILE = "ttest.yml";
-
+    private static Class mainClazz;
     @Getter
     private Injector injector;
     @Getter
@@ -50,9 +50,11 @@ public class TTestApplication{
     }
 
     private void loadProperties() {
-        this.properties = PropertyUtil.loadFile(FILE,this.getClass());
+        this.properties = PropertyUtil.loadFile(FILE,mainClazz != null?mainClazz:this.getClass());
+        if (mainClazz != null){
+            this.properties.setProperty("package",mainClazz.getPackage().getName());
+        }
     }
-
 
     /**
      * 添加监听器
@@ -83,6 +85,7 @@ public class TTestApplication{
 
 
     public static void run(Class clazz,String[] args){
+        mainClazz = clazz;
         TestNG testNG = generateTestNg(clazz, args);
         System.exit(testNG.getStatus());
     }

@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.time.ttest.TTestApplication;
 import com.time.ttest.annotations.Login;
 import com.time.ttest.event.ApplicationStartedEvent;
-import com.time.ttest.http.UnirestFactory;
+import com.time.ttest.http.UnirestManager;
 import com.time.ttest.http.UserFactory;
 import com.time.ttest.util.ReflectionsUtil;
 import kong.unirest.Config;
@@ -23,11 +23,11 @@ import java.util.Set;
  */
 public class UnirestInitializerListener implements ApplicationListener<ApplicationStartedEvent>{
 
-    private final UnirestFactory unirestFactory;
+    private final UnirestManager unirestManager;
     private final UserFactory userFactory;
     @Inject
-    public UnirestInitializerListener(UnirestFactory unirestFactory, UserFactory userFactory) {
-        this.unirestFactory = unirestFactory;
+    public UnirestInitializerListener(UnirestManager unirestManager, UserFactory userFactory) {
+        this.unirestManager = unirestManager;
         this.userFactory = userFactory;
     }
 
@@ -45,12 +45,12 @@ public class UnirestInitializerListener implements ApplicationListener<Applicati
             }
             Login annotation = method.getAnnotation(Login.class);
             if (StringUtils.isNotEmpty(annotation.value())){
-                unirestFactory.put(annotation.value(),new UnirestInstance(config));
+                unirestManager.put(annotation.value(),new UnirestInstance(config));
                 if (annotation.isDefault()){
                     userFactory.setDefaultUser(annotation.value());
                 }
             }else {
-                unirestFactory.putDefault(new UnirestInstance(config));
+                unirestManager.putDefault(new UnirestInstance(config));
             }
         });
     }

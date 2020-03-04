@@ -1,10 +1,12 @@
 package com.time.ttest.http;
 
 import com.time.ttest.context.TTestApplicationContext;
+import com.time.ttest.event.ApplicationHttpSummaryEvent;
 import kong.unirest.HttpRequestSummary;
 import kong.unirest.HttpResponseSummary;
 import kong.unirest.MetricContext;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 
 /**
  * @Auther guoweijie
@@ -26,11 +28,16 @@ public class HttpMetricContext implements MetricContext {
 
     @Override
     public void complete(HttpResponseSummary responseSummary, Exception e) {
-        String status = "success";
-        if (null != e){
-            status = "fail";
-           log.error("http error: {}",e.getMessage());
-        }
-        log.info("path: {} status: {} time: {}",requestSummary.getUrl(),status,(System.currentTimeMillis() - startTime));
+        long endTime = System.currentTimeMillis();
+        HttpSummary httpSummary = HttpSummaryFactory.build()
+                .startTime(startTime)
+                .endTime(endTime)
+                .duration(endTime - startTime)
+                .exception(null != e?e.getMessage():null)
+                .status(responseSummary.getStatus())
+                .statusText(responseSummary.getStatusText())
+                .url(requestSummary.getUrl())
+                .method(requestSummary.getHttpMethod());
+        context.publishEvent(new ApplicationHttpSummaryEvent(httpSummary));
     }
 }

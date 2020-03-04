@@ -70,7 +70,6 @@ public class AssertInterceptor implements MethodInterceptor {
      * 获取@Assert注解的参数
      * @param method 方法
      * @param parametersMap 方法值
-     * @return
      */
     private List<TTestAssert> getAssertParameter(Method method, Map<String, Object> parametersMap) {
         List<TTestAssert> parameterList = Lists.newArrayList();

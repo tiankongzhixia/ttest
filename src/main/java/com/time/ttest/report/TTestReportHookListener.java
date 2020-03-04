@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.time.ttest.context.TTestApplicationContext;
 import com.time.ttest.event.ApplicationEndEvent;
-import com.time.ttest.http.UnirestFactory;
+import com.time.ttest.http.UnirestManager;
 import com.time.ttest.listener.ApplicationListener;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;
@@ -39,8 +39,8 @@ public class TTestReportHookListener implements ApplicationListener<ApplicationE
     public void onApplicationEvent(ApplicationEndEvent event) {
         if (event.getSource() instanceof TTestReport && StringUtils.isNotEmpty(hook)){
             log.info(new Gson().toJson(event.getSource()));
-            UnirestFactory unirestFactory = context.getInjector().getInstance(UnirestFactory.class);
-            UnirestInstance unirestInstance = unirestFactory.get(hookUser);
+            UnirestManager unirestManager = context.getInjector().getInstance(UnirestManager.class);
+            UnirestInstance unirestInstance = unirestManager.get(hookUser);
             HttpResponse response = unirestInstance.post(hook).body(event.getSource()).asEmpty();
             log.info("post hook status {}",response.getStatus());
             response.ifFailure(httpResponse -> {

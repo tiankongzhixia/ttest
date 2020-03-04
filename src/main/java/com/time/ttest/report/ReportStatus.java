@@ -25,6 +25,11 @@ public enum ReportStatus {
      */
     SKIP,
 
+    /**
+     * 忽略
+     */
+    IGNORED,
+
     STARTED,
 
     SUCCESS_PERCENTAGE_FAILURE;

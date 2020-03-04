@@ -30,7 +30,7 @@ public class HttpModule extends BaseModule {
     @Provides
     public UnirestInstance getUnirestInstance(
            @UserName String name,
-            UnirestFactory unirestFactory){
-        return unirestFactory.get(name);
+            UnirestManager unirestManager){
+        return unirestManager.get(name);
     }
 }

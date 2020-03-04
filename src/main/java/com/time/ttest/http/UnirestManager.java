@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Singleton
 @Slf4j
-public class UnirestFactory{
+public class UnirestManager {
     @Inject
     private HttpInterceptor httpInterceptor;
     @Inject

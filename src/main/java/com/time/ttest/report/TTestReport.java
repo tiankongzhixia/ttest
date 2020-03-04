@@ -1,5 +1,6 @@
 package com.time.ttest.report;
 
+import com.time.ttest.http.HttpSummary;
 import lombok.Data;
 
 import java.util.List;
@@ -11,16 +12,23 @@ import java.util.List;
  */
 @Data
 public class TTestReport extends AbstractReport {
-
-    public TTestReport(String time) {
+    public TTestReport() {
         super();
-        this.time = time;
     }
+
 
     private String time;
 
     private Integer testsCount;
 
+    /**
+     * testng运行情况
+     */
     List<TTestSuite> suites;
+
+    /**
+     * 所有http请求
+     */
+    List<HttpSummary> httpSummaries;
 
 }

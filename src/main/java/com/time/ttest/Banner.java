@@ -4,7 +4,6 @@ import java.io.PrintStream;
 
 /**
  * @Auther guoweijie
-
  * @Date 2020-02-24 09:34
  */
 @FunctionalInterface
