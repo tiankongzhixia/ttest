@@ -4,7 +4,7 @@ import kong.unirest.GetRequest;
 import kong.unirest.HttpRequestWithBody;
 import kong.unirest.JsonPatchRequest;
 
-public interface HttpTemplate{
+public interface HttpService{
 
      GetRequest get(String url);
      GetRequest head(String url);

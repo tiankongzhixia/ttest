@@ -2,7 +2,7 @@ package com.time.ttest.http.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.time.ttest.http.HttpTemplate;
+import com.time.ttest.http.HttpService;
 import kong.unirest.GetRequest;
 import kong.unirest.HttpRequestWithBody;
 import kong.unirest.JsonPatchRequest;
@@ -10,13 +10,13 @@ import kong.unirest.UnirestInstance;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class HttpTemplateImpl implements HttpTemplate {
+public class HttpServiceImpl implements HttpService {
 
     private final Provider<UnirestInstance> unirestInstanceProvider;
 
 
     @Inject
-    public HttpTemplateImpl(Provider<UnirestInstance> unirestInstanceProvider) {
+    public HttpServiceImpl(Provider<UnirestInstance> unirestInstanceProvider) {
         this.unirestInstanceProvider = unirestInstanceProvider;
     }
     ;
