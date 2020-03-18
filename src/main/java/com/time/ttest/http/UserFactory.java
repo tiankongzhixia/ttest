@@ -26,12 +26,11 @@ public class UserFactory {
     private String defaultUser;
 
     public UserManager getThreadUserManager(){
-        if (threadUserManager.containsKey(getThreadName())){
-            return threadUserManager.get(getThreadName());
+        if (!threadUserManager.containsKey(getThreadName())){
+            UserManager userManager = new UserManager(defaultUser);
+            threadUserManager.put(getThreadName(),userManager);
         }
-        UserManager userManager = new UserManager(defaultUser);
-        threadUserManager.put(getThreadName(),userManager);
-        return getThreadUserManager();
+        return threadUserManager.get(getThreadName());
     }
 
     private String getThreadName(){
@@ -53,5 +52,14 @@ public class UserFactory {
             }
             this.getThreadUserManager().setUserName(userName);
         }
+    }
+
+    public void setMethodThreadUserName(String defaultUser,String userName) {
+       this.getThreadUserManager().setDefaultUser(defaultUser);
+       this.getThreadUserManager().setDefaultUser(userName);
+    }
+
+    public void setMethodThreadUserName(String userName) {
+        this.getThreadUserManager().setDefaultUser(userName);
     }
 }

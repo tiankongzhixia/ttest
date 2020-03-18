@@ -32,6 +32,7 @@ public abstract class AbstractApplicationContext implements ConfigurableApplicat
         }
     }
 
+    @Override
     public void addApplicationListener(ApplicationListener<?> listener){
         this.getApplicationEventMulticaster().addApplicationListener(listener);
         this.applicationListeners.add(listener);

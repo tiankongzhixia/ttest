@@ -4,34 +4,32 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 public class UserManager {
 
 
-    private List<String> userNameList = new ArrayList<>();
+    private Stack<String> threadUserName = new Stack<>();
 
     @Getter @Setter
     private String defaultUser;
 
-    public UserManager(String defaultUser) {
+    UserManager(String defaultUser) {
         this.setDefaultUser(defaultUser);
     }
 
 
-    public String getUserName(){
-        if (userNameList.size()>0){
-            String userName = userNameList.get(userNameList.size() -1);
-            userNameList.remove(userNameList.size() -1);
-            return userName;
+    String getUserName(){
+        if (threadUserName.size()>0){
+            log.debug("pop thread user {}",threadUserName.peek());
+            return threadUserName.pop();
         }
         return defaultUser;
     }
 
     public void setUserName(String userName){
-        userNameList.add(userName);
+        threadUserName.push(userName);
     }
 
 }

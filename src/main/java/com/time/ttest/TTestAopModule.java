@@ -12,6 +12,7 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.testng.collections.Lists;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,22 +34,30 @@ public class TTestAopModule extends BaseModule {
         bindMyInterceptor(Matchers.any(),Matchers.annotatedWith(Asserts.class),AssertInterceptor.class);
     }
 
+    /**
+     * 绑定拦截
+     * @param classMatcher guice 匹配方法规则
+     * @param methodMatcher 匹配处理方法规则
+     * @param methodInterceptorClasss 拦截器
+     */
     @SafeVarargs
     private final void bindMyInterceptor(Matcher<? super Class<?>> classMatcher,
                                          Matcher<? super Method> methodMatcher,
                                          Class<? extends MethodInterceptor>... methodInterceptorClasss) {
         List<MethodInterceptor> interceptors = Lists.newArrayList();
         for (Class clazz:methodInterceptorClasss){
+            //实例化拦截器
             MethodInterceptor interceptor = null;
             try {
                 interceptor = (MethodInterceptor) clazz.newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
+            //注册拦截器
             requestInjection(interceptor);
             interceptors.add(interceptor);
         }
-        bindInterceptor(classMatcher,methodMatcher,interceptors.toArray(new MethodInterceptor[interceptors.size()]));
+        bindInterceptor(classMatcher,methodMatcher,interceptors.toArray(new MethodInterceptor[0]));
     }
 
 }

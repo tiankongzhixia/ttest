@@ -28,7 +28,7 @@ public class ParamUtil {
         final Map<String, Object> params = new HashMap<>();
         //获取方法所有的参数名称
         String[] parameterNames = paranamer.lookupParameterNames(method);
-        for (int i = 0; i < Math.max(parameterNames.length, args.length); i++) {
+        for (int i = 0; i < Math.min(parameterNames.length, args.length); i++) {
             params.put(parameterNames[i], args[i]);
             params.put(Integer.toString(i), args[i]);
         }

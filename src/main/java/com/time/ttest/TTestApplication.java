@@ -18,10 +18,7 @@ import org.testng.TestRunner;
 import org.testng.collections.Lists;
 import org.testng.internal.ExitCode;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j

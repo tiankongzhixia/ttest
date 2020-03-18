@@ -55,8 +55,7 @@ public class TTestMainListener  implements IExecutionListener, ITestListener, IS
                 userFactory.setMethodThreadUserName(result.getParameters(),method,true);
             }else if (method.getClass().isAnnotationPresent(User.class)){
                 String value = method.getClass().getAnnotation(User.class).value();
-                userFactory.getThreadUserManager().setDefaultUser(value);
-                userFactory.getThreadUserManager().setUserName(value);
+                userFactory.setMethodThreadUserName(value,value);
             }
             //设置allure注解内容
             AttributesUtil.setAllureAnnotation(result,method);
