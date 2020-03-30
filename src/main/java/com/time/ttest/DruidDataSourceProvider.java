@@ -11,8 +11,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
+ * Druid 配置
  * @Auther guoweijie
-
  */
 public class DruidDataSourceProvider implements Provider<DataSource> {
     private DruidDataSource dataSource = new DruidDataSource();

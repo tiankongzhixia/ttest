@@ -4,6 +4,9 @@ import com.time.ttest.TTestApplication;
 import com.time.ttest.context.ConfigurableApplicationContext;
 import lombok.Getter;
 
+/**
+ * 应用装载Guice前发送
+ */
 public class ApplicationStartedEvent extends TTestApplicationEvent {
     @Getter
     private final ConfigurableApplicationContext configurableApplicationContext;

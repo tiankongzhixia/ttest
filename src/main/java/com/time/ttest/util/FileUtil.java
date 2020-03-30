@@ -3,6 +3,8 @@ package com.time.ttest.util;
 import lombok.extern.slf4j.Slf4j;
 import java.io.*;
 import java.nio.file.NoSuchFileException;
+import java.util.NoSuchElementException;
+
 /**
  * @Auther guoweijie
  * @Email 877502087@qq.com
@@ -12,14 +14,14 @@ import java.nio.file.NoSuchFileException;
 public class FileUtil {
     /**
      * 获取文件的流
-     * @param fileName
-     * @return
-     * @throws NoSuchFileException
+     * @param fileName 文件名称
+     * @return 文件流
+     * @throws NoSuchElementException
      */
-    public static InputStream getResourceAsStream(String fileName) throws NoSuchFileException {
+    public static InputStream getResourceAsStream(String fileName) throws NoSuchElementException {
         InputStream resourceAsStream = FileUtil.class.getClassLoader().getResourceAsStream(fileName);
         if (null == resourceAsStream){
-            throw new NoSuchFileException("not such file "+fileName);
+            throw new NoSuchElementException("not such file "+fileName);
         }
         return resourceAsStream;
     }

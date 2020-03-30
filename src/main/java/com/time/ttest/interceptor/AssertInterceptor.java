@@ -43,21 +43,16 @@ public class AssertInterceptor implements MethodInterceptor {
         return result;
     }
 
+    /**
+     * 校验返回值是否和校验参数一致
+     * @param assertParameters
+     * @param result
+     */
     private void asserts(List<TTestAssert> assertParameters, Object result) {
         assertParameters.forEach(tTestAssert -> {
             if (tTestAssert.getPath().equals("$")){
                 Object expected = tTestAssert.getExpected();
-                try {
-                    //判断是否是包装类
-                    if (((Class)tTestAssert.getTransform().getField("TYPE").get(null)).isPrimitive()){
-                        Method valueOf = tTestAssert.getTransform().getDeclaredMethod("valueOf", String.class);
-                        expected = valueOf.invoke(valueOf, expected);
-                    }
-                    org.testng.Assert.assertEquals(result,expected);
-                } catch (Exception ignored) {
-                    org.testng.Assert.assertEquals( result,expected,"Type conversion failure recommended to use the base type wrapper");
-                }
-
+                org.testng.Assert.assertEquals(result,expected);
             }else {
                 String resultString = gson.toJson(result);
                 JsonAssert.with(resultString).assertEquals(tTestAssert.getPath(),

@@ -28,7 +28,8 @@ public class TTestMyBatisModule extends MyBatisModule {
 
     @Override
     protected void initialize() {
-        Properties properties = PropertyUtil.getPropertyPrefix(application.getProperties(),
+        //替换配置文件中 druid.{数据库名} 为 jdbc DruidDataSourceProvider 配置中使用
+        Properties properties = PropertyUtil.replacePropertyPrefix(application.getProperties(),
                 DATASOURCE_PREFIX + mapperScan.datasource(), "jdbc");
         properties.put("mybatis.environment.id",mapperScan.datasource());
         Names.bindProperties(binder(), properties);
@@ -46,6 +47,11 @@ public class TTestMyBatisModule extends MyBatisModule {
         return myBatisModule;
     }
 
+    /**
+     * 根据MapperScan MapperScans获取多个Module配置
+     * @param application
+     * @return
+     */
     public static List<TTestMyBatisModule> getModules(TTestApplication application){
         Set<Class<?>> mapperScanClasss = ReflectionsUtil.getTypesAnnotatedWith(application.getProperties().getProperty("package"), MapperScan.class);
         Set<Class<?>> mapperScansClasss = ReflectionsUtil.getTypesAnnotatedWith(application.getProperties().getProperty("package"), MapperScans.class);

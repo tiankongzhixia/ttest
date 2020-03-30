@@ -1,6 +1,7 @@
 package com.time.ttest.event;
 
 /**
+ * 测试报告的消息
  * @Auther guoweijie
  * @Email 877502087@qq.com
  * @Date 2020-03-03 13:15

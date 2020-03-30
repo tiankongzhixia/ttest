@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 获取Tesng 运行实例的附加属性
  * @Auther guoweijie
-
  * @Date 2020-02-26 22:01
  */
 public class AttributesUtil {

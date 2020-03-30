@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.google.inject.PrivateModule;
 import com.google.inject.name.Names;
 import com.time.ttest.annotations.Module;
-import com.time.ttest.http.HttpModule;
 import com.time.ttest.module.BaseModule;
 import com.time.ttest.module.TTestMyBatisModule;
 import com.time.ttest.module.TTestServiceModule;

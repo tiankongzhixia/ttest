@@ -4,6 +4,7 @@ import org.testng.TestNG;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @Auther guoweijie
@@ -12,9 +13,17 @@ import java.lang.reflect.Method;
  */
 public class TestNgUtil {
 
+    /**
+     * 反射执行testng方法
+     * @param methodName
+     * @param parameterTypes
+     * @param instance
+     * @param args
+     * @return
+     */
     public static Object invokeTestNGMethod(String methodName, Class<?>[] parameterTypes, Object instance, Object... args) {
         try {
-            Method declaredMethod = TestNG.class.getDeclaredMethod(methodName, parameterTypes);
+            Method declaredMethod = getDeclaredMethod(TestNG.class,methodName,parameterTypes);
             declaredMethod.setAccessible(true);
             return declaredMethod.invoke(instance, args);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
@@ -31,5 +40,13 @@ public class TestNgUtil {
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Method getDeclaredMethod(Class<?> clazz,String methodName, List<Class<?>> parameterTypes) throws NoSuchMethodException {
+        return clazz.getDeclaredMethod(methodName,parameterTypes.toArray(new Class<?>[0]));
+    }
+
+    public static Method getDeclaredMethod(Class<?> clazz,String methodName, Class<?>[] parameterTypes) throws NoSuchMethodException {
+        return clazz.getDeclaredMethod(methodName,parameterTypes);
     }
 }

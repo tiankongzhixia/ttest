@@ -1,40 +1,33 @@
 package com.time.ttest;
 
-import com.beust.jcommander.JCommander;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import com.google.inject.Stage;
 import com.time.ttest.context.AbstractApplicationContext;
 import com.time.ttest.context.TTestApplicationContext;
 import com.time.ttest.listener.ApplicationListener;
 import com.time.ttest.listener.EventPublishingRunListener;
+import com.time.ttest.proxy.TTestNGProxy;
 import com.time.ttest.util.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.CommandLineArgs;
 import org.testng.TestNG;
-import org.testng.TestNGException;
-import org.testng.TestRunner;
 import org.testng.collections.Lists;
-import org.testng.internal.ExitCode;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
+@Singleton
 public class TTestApplication{
-    private static final String FILE = "ttest.yml";
-    private static Class mainClazz;
     @Getter
     private Injector injector;
     @Getter
     private List<ApplicationListener<?>> listeners;
     @Getter
-    private Properties properties;
+    private Properties properties = new TTestProperties();
 
-    public TTestApplication(){
-        //获取配置文件
-        loadProperties();
+    public TTestApplication() throws Throwable {
         printBanner();
         injector = Guice.createInjector(Stage.PRODUCTION,TTestModule.getModule(this));
         //添加监听器
@@ -44,13 +37,6 @@ public class TTestApplication{
         TTestApplicationContext context = createApplicationContext();
         preContext(context,listeners);
         listener.running(context);
-    }
-
-    private void loadProperties() {
-        this.properties = PropertyUtil.loadFile(FILE,mainClazz != null?mainClazz:this.getClass());
-        if (mainClazz != null){
-            this.properties.setProperty("package",mainClazz.getPackage().getName());
-        }
     }
 
     /**
@@ -81,54 +67,20 @@ public class TTestApplication{
     }
 
 
-    public static void run(Class clazz,String[] args){
-        mainClazz = clazz;
+    /**
+     * 代码启动方法
+     * @param clazz 启动类
+     * @param args 启动参数
+     */
+    public static void run(Class clazz,String[] args) {
         TestNG testNG = generateTestNg(clazz, args);
         System.exit(testNG.getStatus());
     }
 
-    public static TestNG generateTestNg(Class clazz,String[] args){
-        Properties properties = PropertyUtil.loadFile(FILE,clazz);
-        properties.setProperty("package",clazz.getPackage().getName());
-        TestNG testNG = new TestNG();
-        CommandLineArgs cla = commandLineArgs(properties,args);
-        try {
-            testNG.setTestSuites(cla.suiteFiles);
-            TestNgUtil.invokeTestNGMethod("validateCommandLineParameters",new Class[]{CommandLineArgs.class},testNG,cla);
-            TestNgUtil.invokeTestNGMethod("configure",new Class[]{CommandLineArgs.class},testNG,cla);
-            testNG.run();
-        } catch (TestNGException ex) {
-            if (TestRunner.getVerbose() > 1) {
-                ex.printStackTrace(System.out);
-            } else {
-                log.error(ex.getMessage());
-            }
-            TestNgUtil.setPrivateParam("exitCode",testNG,ExitCode.newExitCodeRepresentingFailure());
-        }
-        return testNG;
-    }
-
-    private static CommandLineArgs commandLineArgs(Properties properties,String... args){
-        CommandLineArgs cla = new CommandLineArgs();
-        JCommander jCommander = new JCommander(cla);
-        jCommander.parse(args);
-        //添加配置的suit xml 并去重
-        cla.suiteFiles = cla.suiteFiles.size()>0?cla.suiteFiles:getTestNgSuitFiles(properties);
-        //添加 guice InjectorFactory
-        cla.dependencyInjectoryFactoryClass = TTestInjectorFactory.class.getName();
-        return cla;
-    }
-
-    /**
-     *  获取配置文件的 suitefile
-     * @param properties 配置文件参数
-     * @return
-     */
-    private static List<String> getTestNgSuitFiles(Properties properties){
-        List<String> suiteFiles = Lists.newArrayList();
-        String[] ttestSuiteFiles =properties.getProperty("testng.suite.file").split(",");
-        suiteFiles.addAll(Arrays.asList(ttestSuiteFiles));
-        suiteFiles = suiteFiles.stream().distinct().collect(Collectors.toList());
-        return suiteFiles;
+    public static TestNG generateTestNg(Class clazz,String[] args) {
+        Properties properties = new TTestProperties(clazz);
+        TTestNGProxy testNGProxy = new TTestNGProxy(new TestNG(),properties,args);
+        testNGProxy.run();
+        return testNGProxy.getTestNG();
     }
 }

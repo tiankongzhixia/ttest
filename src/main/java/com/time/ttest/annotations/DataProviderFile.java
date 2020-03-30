@@ -17,15 +17,16 @@ import java.lang.annotation.*;
 public @interface DataProviderFile {
     /**
      * 路径
-     * @return
      */
     String value();
 
     /**
      * 需要转换的类型
-     * @return
      */
-    Class transform() default JsonObject.class;
+    Class<?> transform() default JsonObject.class;
 
+    /**
+     * 自定义的Gson
+     */
     Class<? extends GsonBuilder> gson() default TTestGsonBuilder.class;
 }

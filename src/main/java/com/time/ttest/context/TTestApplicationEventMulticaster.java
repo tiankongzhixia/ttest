@@ -23,6 +23,11 @@ public class TTestApplicationEventMulticaster extends AbstractApplicationEventMu
         }
     }
 
+    /**
+     * 获取所有该接收消息的监听器
+     * @param event
+     * @return
+     */
     private Set<ApplicationListener<?>> getApplicationListeners(ApplicationEvent event) {
         Set<ApplicationListener<?>> listeners = new LinkedHashSet<>();
         this.getListeners().forEach(listener -> {

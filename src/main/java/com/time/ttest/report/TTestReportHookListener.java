@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.time.ttest.context.TTestApplicationContext;
 import com.time.ttest.event.ApplicationEndEvent;
-import com.time.ttest.http.UnirestManager;
 import com.time.ttest.listener.ApplicationListener;
 import kong.unirest.HttpResponse;
 import kong.unirest.UnirestInstance;

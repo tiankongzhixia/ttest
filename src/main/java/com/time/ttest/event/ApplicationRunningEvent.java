@@ -5,8 +5,8 @@ import com.time.ttest.context.ConfigurableApplicationContext;
 import lombok.Getter;
 
 /**
+ * 应用装载完Guice后发送消息
  * @Auther guoweijie
-
  * @Date 2020-02-23 17:00
  */
 public class ApplicationRunningEvent extends TTestApplicationEvent {

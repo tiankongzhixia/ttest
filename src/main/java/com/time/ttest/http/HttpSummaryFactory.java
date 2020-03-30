@@ -6,7 +6,7 @@ package com.time.ttest.http;
  */
 public class HttpSummaryFactory {
 
-    public static HttpSummary build(){
+    public static HttpSummary builder(){
         return new HttpSummary();
     }
 }

@@ -9,13 +9,17 @@ import java.util.NoSuchElementException;
  */
 public enum FileSubSuffix {
 
-    JSON;
+    JSON,
+    YML;
 
 
     public static FileSubSuffix match(String fileName){
         String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
         if (suffix.equals("json") || suffix.equals("JSON")){
             return FileSubSuffix.JSON;
+        }
+        if (suffix.equals("YML") || suffix.equals("yml")){
+            return FileSubSuffix.YML;
         }
         throw new NoSuchElementException(suffix + " 不支持");
     }

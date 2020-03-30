@@ -1,7 +1,7 @@
 package com.time.ttest.interceptor;
 
-import com.time.ttest.File;
-import com.time.ttest.FileFactory;
+import com.time.ttest.file.File;
+import com.time.ttest.file.FileFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,7 +16,7 @@ public class DataProviderFileHolder {
 
     public static File getFile(String name){
         if (!dataProviderFiles.containsKey(name)){
-            dataProviderFiles.putIfAbsent(name, FileFactory.createFile(name));
+            dataProviderFiles.putIfAbsent(name, FileFactory.builder(name));
         }
         return dataProviderFiles.get(name);
     }

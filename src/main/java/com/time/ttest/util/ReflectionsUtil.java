@@ -14,6 +14,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ReflectionsUtil {
     private static ConcurrentHashMap<String,Reflections> reflectionsHashMap = new ConcurrentHashMap<>();
 
+    /**
+     * 根据不同的包名获取不同的扫描器
+     * @param packageName 包名
+     * @return
+     */
     private static Reflections getReflections(String packageName){
         if (!reflectionsHashMap.containsKey(packageName)){
             Reflections reflections =  new Reflections(new ConfigurationBuilder().forPackages(packageName)
@@ -27,16 +32,36 @@ public class ReflectionsUtil {
         return reflectionsHashMap.get(packageName);
     }
 
-    public static Set<Method> getMethodsAnnotatedWith(String name, Class<? extends Annotation>  clazz) {
-        return getReflections(name).getMethodsAnnotatedWith(clazz);
+    /**
+     * 从方法上匹配注解
+     * @param packageName 包名
+     * @param annotation  注解
+     * @return
+     */
+    public static Set<Method> getMethodsAnnotatedWith(String packageName, Class<? extends Annotation>  annotation) {
+        return getReflections(packageName).getMethodsAnnotatedWith(annotation);
     }
 
-    public static <T> Set<Class<? extends T>> getSubTypesOf(String name,Class<T> clazz){
-        return getReflections(name).getSubTypesOf(clazz);
+    /**
+     * 获取指定类的所有子类
+     * @param packageName 包名
+     * @param clazz 指定父类
+     * @param <T>
+     * @return
+     */
+    public static <T> Set<Class<? extends T>> getSubTypesOf(String packageName,Class<T> clazz){
+        return getReflections(packageName).getSubTypesOf(clazz);
     }
 
-    public static <T> Set<Class<?>> getTypesAnnotatedWith(String name, Class<? extends Annotation>  clazz){
-        return getReflections(name).getTypesAnnotatedWith(clazz);
+    /**
+     * 从类上获取指定注解
+     * @param packageName 包名
+     * @param annotation 注解
+     * @param <T>
+     * @return
+     */
+    public static <T> Set<Class<?>> getTypesAnnotatedWith(String packageName, Class<? extends Annotation>  annotation){
+        return getReflections(packageName).getTypesAnnotatedWith(annotation);
     }
 
 }

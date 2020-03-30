@@ -9,10 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 /**
+ * Unirest 拦截器
  * @Auther guoweijie
-
  * @Date 2020-02-25 17:15
- * 发出实际请求后的那一刻
+ * 拦截http响应返回
  */
 @Slf4j
 public class HttpMetricContext implements MetricContext {
@@ -26,18 +26,23 @@ public class HttpMetricContext implements MetricContext {
         this.context = context;
     }
 
+    /**
+     * 拦截http响应返回 将发送到http统计
+     * @param responseSummary 返回结果
+     * @param e 错误信息
+     */
     @Override
     public void complete(HttpResponseSummary responseSummary, Exception e) {
         long endTime = System.currentTimeMillis();
-        HttpSummary httpSummary = HttpSummaryFactory.build()
-                .startTime(startTime)
-                .endTime(endTime)
-                .duration(endTime - startTime)
-                .exception(null != e?e.getMessage():null)
-                .status(responseSummary.getStatus())
-                .statusText(responseSummary.getStatusText())
-                .url(requestSummary.getUrl())
-                .method(requestSummary.getHttpMethod());
+        HttpSummary httpSummary = HttpSummaryFactory.builder()
+                .setStartTime(startTime)
+                .setEndTime(endTime)
+                .setDuration(endTime - startTime)
+                .setExceptionMessage(null != e?e.getMessage():null)
+                .setStatus(responseSummary.getStatus())
+                .setStatusText(responseSummary.getStatusText())
+                .setUrl(requestSummary.getUrl())
+                .setMethod(requestSummary.getHttpMethod());
         context.publishEvent(new ApplicationHttpSummaryEvent(httpSummary));
     }
 }

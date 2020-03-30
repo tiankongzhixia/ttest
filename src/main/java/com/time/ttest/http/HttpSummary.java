@@ -2,6 +2,7 @@ package com.time.ttest.http;
 
 import kong.unirest.HttpMethod;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * http请求摘要
@@ -10,6 +11,7 @@ import lombok.Data;
  * @Date 2020-03-03 12:06
  */
 @Data
+@Accessors(chain = true)
 public class HttpSummary{
 
     private String url;
@@ -46,47 +48,5 @@ public class HttpSummary{
      * 持续时间
      */
     private long duration;
-
-    public HttpSummary url(String url){
-        this.url = url;
-        return this;
-    }
-
-    public HttpSummary method(HttpMethod method){
-        this.method = method;
-        return this;
-    }
-
-    public HttpSummary startTime(long startTime){
-        this.startTime = startTime;
-        return this;
-    }
-
-    public HttpSummary endTime(long endTime){
-        this.endTime = endTime;
-        return this;
-    }
-
-    public HttpSummary status(int status){
-        this.status = status;
-        return this;
-    }
-
-    public HttpSummary statusText(String statusText){
-        this.statusText = statusText;
-        return this;
-    }
-
-    public HttpSummary exception(String exceptionMessage){
-        this.exceptionMessage = exceptionMessage;
-        return this;
-    }
-
-    public HttpSummary duration(long duration){
-        this.duration = duration;
-        return this;
-    }
-
-
 
 }
