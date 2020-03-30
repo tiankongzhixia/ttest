@@ -23,7 +23,7 @@ public class TTestModule extends BaseModule {
 
     @Override
     public void configure(){
-        install(HttpModule.getModule());
+//        install(HttpModule.getModule());
         install(TTestAopModule.getModule());
         Names.bindProperties(binder(), getApplication().getProperties());
         //mybatis Druid 多数据源配置

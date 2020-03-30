@@ -38,13 +38,13 @@ public class TTestReportHookListener implements ApplicationListener<ApplicationE
     public void onApplicationEvent(ApplicationEndEvent event) {
         if (event.getSource() instanceof TTestReport && StringUtils.isNotEmpty(hook)){
             log.info(new Gson().toJson(event.getSource()));
-            UnirestManager unirestManager = context.getInjector().getInstance(UnirestManager.class);
-            UnirestInstance unirestInstance = unirestManager.get(hookUser);
-            HttpResponse response = unirestInstance.post(hook).body(event.getSource()).asEmpty();
-            log.info("post hook status {}",response.getStatus());
-            response.ifFailure(httpResponse -> {
-                log.info("post hook error {}",response.getBody());
-            });
+//            UnirestManager unirestManager = context.getInjector().getInstance(UnirestManager.class);
+//            UnirestInstance unirestInstance = unirestManager.get(hookUser);
+//            HttpResponse response = unirestInstance.post(hook).body(event.getSource()).asEmpty();
+//            log.info("post hook status {}",response.getStatus());
+//            response.ifFailure(httpResponse -> {
+//                log.info("post hook error {}",response.getBody());
+//            });
         }
     }
 }
