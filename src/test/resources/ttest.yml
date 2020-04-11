@@ -1,0 +1,23 @@
+package: com.time.ttest.test
+# testNG启动的配置文件,仅在使用TTestApplication.run()方法时起作用
+#testng:
+#  suite:
+#    file: /Users/***/src/main/resources/testng.xml,/Users/***/src/main/resources/testn1.xml
+#ttest:
+#  report:
+#    # 以Post方式发送JSON测试报告
+#    hook: http:://127.0.0.1/report
+#    # 使用配置的user发送
+#    hookUser: default
+#  datasource:
+#    druid:
+#      magic: #自定义数据库名称
+#        url: jdbc:mysql://127.0.0.1:3306/magic?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+#        driverClassName: com.mysql.jdbc.Driver
+#        password: 123456
+#        username: root
+#      ttest: #自定义数据库名称
+#        url: jdbc:mysql://127.0.0.1:3306/ttest?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+#        driverClassName: com.mysql.jdbc.Driver
+#        password: 123456
+#        username: root

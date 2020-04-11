@@ -1,9 +1,9 @@
 package com.time.ttest.listener;
 
-import com.time.ttest.context.ConfigurableApplicationContext;
+import com.time.ttest.context.TTestContext;
 
 public interface ApplicationRunListener {
     void starting();
 
-    void running(ConfigurableApplicationContext context);
+    void running(TTestContext context);
 }

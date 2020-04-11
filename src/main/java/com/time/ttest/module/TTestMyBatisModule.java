@@ -39,6 +39,9 @@ public class TTestMyBatisModule extends MyBatisModule {
         addSimpleAliases(mapperScan.value());
     }
 
+    public String getMapperPackage(){
+        return mapperScan.value();
+    }
 
     public static TTestMyBatisModule getModule(TTestApplication application,MapperScan mapperScan) {
         TTestMyBatisModule myBatisModule = new TTestMyBatisModule();
@@ -49,27 +52,19 @@ public class TTestMyBatisModule extends MyBatisModule {
 
     /**
      * 根据MapperScan MapperScans获取多个Module配置
-     * @param application
      * @return
      */
-    public static List<TTestMyBatisModule> getModules(TTestApplication application){
-        Set<Class<?>> mapperScanClasss = ReflectionsUtil.getTypesAnnotatedWith(application.getProperties().getProperty("package"), MapperScan.class);
-        Set<Class<?>> mapperScansClasss = ReflectionsUtil.getTypesAnnotatedWith(application.getProperties().getProperty("package"), MapperScans.class);
+    public static List<TTestMyBatisModule> getModules(TTestApplication application,Class clazz){
         List<TTestMyBatisModule> moduleList = Lists.newArrayList();
-        for (Class clazz:mapperScanClasss){
-            if (clazz.getAnnotation(MapperScan.class) != null){
-                MapperScan mapperScan = (MapperScan) clazz.getAnnotation(MapperScan.class);
-                moduleList.add(getModule(application,mapperScan));
-            }
+        if (clazz.isAnnotationPresent(MapperScan.class)){
+            MapperScan mapperScan = (MapperScan) clazz.getAnnotation(MapperScan.class);
+            moduleList.add(getModule(application,mapperScan));
         }
-
-        for (Class clazz:mapperScansClasss){
-            if (clazz.getAnnotation(MapperScans.class) != null){
-                MapperScans mapperScans = (MapperScans) clazz.getAnnotation(MapperScans.class);
-                MapperScan[] mapperScanList = mapperScans.value();
-                for (MapperScan mapperScan:mapperScanList){
-                    moduleList.add(getModule(application,mapperScan));
-                }
+        if (clazz.isAnnotationPresent(MapperScans.class)){
+            MapperScans mapperScans = (MapperScans) clazz.getAnnotation(MapperScans.class);
+            MapperScan[] mapperScanList = mapperScans.value();
+            for (MapperScan mapperScan:mapperScanList){
+                moduleList.add(getModule(application,mapperScan));
             }
         }
         return moduleList;

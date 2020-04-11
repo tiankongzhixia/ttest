@@ -1,15 +1,13 @@
 package com.time.ttest.file;
 
-import com.time.ttest.FileSubSuffix;
 import com.time.ttest.util.FileUtil;
 
 import java.io.InputStream;
-import java.nio.file.NoSuchFileException;
 
 /**
  * 文件的父类，提供获取转换后的目标对象
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-03-18 23:15
  */
 public abstract class AbsFile<T> implements File {

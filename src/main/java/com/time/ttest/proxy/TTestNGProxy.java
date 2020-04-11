@@ -1,7 +1,7 @@
 package com.time.ttest.proxy;
 
 import com.beust.jcommander.JCommander;
-import com.time.ttest.TTestInjectorFactory;
+import com.time.ttest.TTestApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.CommandLineArgs;
 import org.testng.TestNG;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * testng代理类
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-03-22 23:07
  */
 @Slf4j
@@ -79,7 +79,7 @@ public class TTestNGProxy<T> extends Proxy<T>{
         //如果启动参数没有指定xml，则使用配置文件中的
         cla.suiteFiles = cla.suiteFiles.size()>0?cla.suiteFiles:getTestNgSuitFiles(properties);
         //添加 guice InjectorFactory
-        cla.dependencyInjectoryFactoryClass = TTestInjectorFactory.class.getName();
+        cla.dependencyInjectoryFactoryClass = TTestApplication.class.getName();
         return cla;
     }
 

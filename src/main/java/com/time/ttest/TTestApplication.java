@@ -1,17 +1,18 @@
 package com.time.ttest;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Singleton;
-import com.google.inject.Stage;
+import com.google.inject.*;
+import com.time.ttest.annotations.TTestConfiguration;
 import com.time.ttest.context.AbstractApplicationContext;
 import com.time.ttest.context.TTestApplicationContext;
 import com.time.ttest.listener.ApplicationListener;
 import com.time.ttest.listener.EventPublishingRunListener;
+import com.time.ttest.module.TTestConfigurationModule;
+import com.time.ttest.module.TTestModule;
 import com.time.ttest.proxy.TTestNGProxy;
 import com.time.ttest.util.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.IInjectorFactory;
 import org.testng.TestNG;
 import org.testng.collections.Lists;
 
@@ -19,19 +20,36 @@ import java.util.*;
 
 @Slf4j
 @Singleton
-public class TTestApplication{
+public class TTestApplication {
+
     @Getter
     private Injector injector;
     @Getter
-    private List<ApplicationListener<?>> listeners;
+    private List<ApplicationListener<?>> listeners = Lists.newArrayList();
     @Getter
     private Properties properties = new TTestProperties();
+    @Getter
+    private Set<Class<?>> configurations;
 
-    public TTestApplication() throws Throwable {
+    public TTestApplication(){
+        init();
+    }
+
+    private void init(){
         printBanner();
-        injector = Guice.createInjector(Stage.PRODUCTION,TTestModule.getModule(this));
+        scanConfig();
+        injector = Guice.createInjector(Stage.PRODUCTION, TTestModule.getModule(this));
+        initListeners();
+    }
+
+    private void scanConfig() {
+        configurations = ReflectionsUtil.getTypesAnnotatedWith(properties.getProperty("package"), TTestConfiguration.class);
+    }
+
+    private void initListeners(){
         //添加监听器
         this.setListeners(ReflectionsUtil.getSubTypesOf(this.getClass().getPackage().getName(), ApplicationListener.class));
+        this.setListeners(ReflectionsUtil.getSubTypesOf(properties.getProperty("package"), ApplicationListener.class));
         EventPublishingRunListener listener = new EventPublishingRunListener(this);
         listener.starting();
         TTestApplicationContext context = createApplicationContext();
@@ -44,7 +62,6 @@ public class TTestApplication{
      * @param applicationListeners 监听器列表
      */
     private void setListeners(Set<Class<? extends ApplicationListener>> applicationListeners) {
-        listeners = Lists.newArrayList();
         applicationListeners.forEach(listener->{
             listeners.add(injector.getInstance(listener));
         });
@@ -63,6 +80,7 @@ public class TTestApplication{
     private TTestApplicationContext createApplicationContext() {
         TTestApplicationContext context = injector.getInstance(TTestApplicationContext.class);
         context.setInjector(injector);
+        context.setProperties(properties);
         return context;
     }
 

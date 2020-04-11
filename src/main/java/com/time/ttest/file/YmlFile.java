@@ -1,17 +1,18 @@
 package com.time.ttest.file;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Yml文件
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-03-22 23:25
  */
 @Slf4j

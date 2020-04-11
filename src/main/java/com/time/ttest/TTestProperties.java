@@ -3,10 +3,7 @@ package com.time.ttest;
 import com.time.ttest.file.FileFactory;
 import com.time.ttest.file.YmlFile;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * 默认配置
@@ -22,16 +19,16 @@ public class TTestProperties extends Properties {
 
     private Class packageMainClass;
 
-    public TTestProperties() throws Throwable {
+    public TTestProperties(){
         init();
     }
 
-    public TTestProperties(String fileName) throws IOException {
+    public TTestProperties(String fileName) {
         this.fileName = fileName;
         init();
     }
 
-    public TTestProperties(String fileName,Class packageMainClass) throws Throwable {
+    public TTestProperties(String fileName,Class packageMainClass) {
         this.fileName = fileName;
         this.packageMainClass = packageMainClass;
         init();
@@ -44,7 +41,8 @@ public class TTestProperties extends Properties {
 
     private void init() {
         mFile = (YmlFile) FileFactory.builder(fileName);
-        HashMap<String,String> map = (HashMap<String, String>) mFile.transformation(HashMap.class);
+        HashMap<String,String> map = new HashMap<String, String>();
+        convertToMap((HashMap<String, String>) mFile.transformation(HashMap.class),map,null);
         check(map);
         this.putAll(map);
     }
@@ -64,6 +62,27 @@ public class TTestProperties extends Properties {
                 throw new NoSuchElementException("ttest配置文件package为必填");
             }else {
                 map.put("package",packageMainClass.getPackage().getName());
+            }
+        }
+    }
+
+    private void convertToMap(Map map, Map newMap, String key){
+        Set<Map.Entry> set = map.entrySet();
+        for (Map.Entry entry:set){
+            Object key2 = entry.getKey();
+            Object value = entry.getValue();
+            if(value instanceof LinkedHashMap){
+                if(key==null){
+                    convertToMap((Map)value,newMap,key2.toString());
+                }else{
+                    convertToMap((Map)value,newMap,key+"."+key2.toString());
+                }
+            }
+            if(key==null){
+                newMap.put(key2.toString(), value.toString());
+            }
+            if(key!=null){
+                newMap.put(key+"."+key2.toString(), value.toString());
             }
         }
     }
