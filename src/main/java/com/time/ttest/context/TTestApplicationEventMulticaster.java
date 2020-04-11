@@ -2,6 +2,8 @@ package com.time.ttest.context;
 
 import com.time.ttest.event.ApplicationEvent;
 import com.time.ttest.listener.ApplicationListener;
+import com.time.ttest.util.ClassUtil;
+import com.time.ttest.util.ParameterizedTypeUtil;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -32,10 +34,8 @@ public class TTestApplicationEventMulticaster extends AbstractApplicationEventMu
         Set<ApplicationListener<?>> listeners = new LinkedHashSet<>();
         this.getListeners().forEach(listener -> {
             //判断 listener 实现的 listener<event> event类型是否一致 或者是子类
-            ParameterizedType parameterizedType = (ParameterizedType) listener.getClass().getGenericInterfaces()[0];
-            Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-            Class clazz = (Class) actualTypeArguments[0];
-            if (clazz == event.getClass() || clazz.isAssignableFrom(event.getClass())){
+            ParameterizedType parameterizedType = ClassUtil.findClassGenericInterface(listener.getClass(), ParameterizedTypeUtil.generateGeneric(ApplicationListener.class,event.getClass()));
+            if (null != parameterizedType) {
                 listeners.add(listener);
             }
         });

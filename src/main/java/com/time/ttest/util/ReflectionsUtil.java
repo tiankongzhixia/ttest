@@ -1,10 +1,7 @@
 package com.time.ttest.util;
 
 import org.reflections.Reflections;
-import org.reflections.scanners.FieldAnnotationsScanner;
-import org.reflections.scanners.MethodAnnotationsScanner;
-import org.reflections.scanners.MethodParameterScanner;
-import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.*;
 import org.reflections.util.ConfigurationBuilder;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -21,11 +18,13 @@ public class ReflectionsUtil {
      */
     private static Reflections getReflections(String packageName){
         if (!reflectionsHashMap.containsKey(packageName)){
-            Reflections reflections =  new Reflections(new ConfigurationBuilder().forPackages(packageName)
-                    .addScanners(new MethodAnnotationsScanner())// 添加 方法注解扫描工具
-                    .addScanners(new FieldAnnotationsScanner()) // 添加 属性注解扫描工具
-                    .addScanners(new SubTypesScanner()) // 添加子类扫描工具
-                    .addScanners(new MethodParameterScanner() ) // 添加方法参数扫描工具
+            Reflections reflections =  new Reflections(
+                    packageName,
+                    new MethodAnnotationsScanner(),// 添加 方法注解扫描工具
+                    new FieldAnnotationsScanner(),// 添加 属性注解扫描工具
+                    new SubTypesScanner(),// 添加子类扫描工具
+                    new MethodParameterScanner(),// 添加方法参数扫描工具
+                    new TypeAnnotationsScanner()
             );
             reflectionsHashMap.put(packageName,reflections);
         }

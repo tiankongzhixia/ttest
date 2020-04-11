@@ -1,13 +1,14 @@
-package com.time.ttest;
+package com.time.ttest.module;
 
 import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
 import com.time.ttest.annotations.Assert;
 import com.time.ttest.annotations.Asserts;
 import com.time.ttest.annotations.DataProviderFile;
-import com.time.ttest.interceptor.AssertInterceptor;
+import com.time.ttest.annotations.HttpUser;
+import com.time.ttest.asserts.AssertInterceptor;
 import com.time.ttest.interceptor.DataProviderFileInterceptor;
-import com.time.ttest.module.BaseModule;
+import com.time.ttest.http.UserInterceptor;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.testng.collections.Lists;
 
@@ -28,7 +29,7 @@ public class TTestAopModule extends BaseModule {
 
     @Override
     public void configure(){
-//        bindMyInterceptor(Matchers.any(),Matchers.annotatedWith(User.class),UserInterceptor.class);
+        bindMyInterceptor(Matchers.any(),Matchers.annotatedWith(HttpUser.class), UserInterceptor.class);
         bindMyInterceptor(Matchers.any(),Matchers.annotatedWith(Assert.class),AssertInterceptor.class);
         bindMyInterceptor(Matchers.any(),Matchers.annotatedWith(Asserts.class),AssertInterceptor.class);
         bindMyInterceptor(Matchers.any(),Matchers.annotatedWith(DataProviderFile.class), DataProviderFileInterceptor.class);

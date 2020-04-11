@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="我的" configfailurepolicy="continue">
+    <test name="magicTest">
+        <classes>
+            <class name="com.time.ttest.test.user.UserAnnotationTest"/>
+            <class name="com.time.ttest.test.ast.AssertAnnotationTest"/>
+            <class name="com.time.ttest.test.dataProviderFile.DataProviderFileTest"/>
+        </classes>
+    </test>
+</suite>

@@ -1,7 +1,8 @@
 package com.time.ttest.listener;
 
 import com.time.ttest.TTestApplication;
-import com.time.ttest.context.ConfigurableApplicationContext;
+import com.time.ttest.context.TTestApplicationContext;
+import com.time.ttest.context.TTestContext;
 import com.time.ttest.context.TTestApplicationEventMulticaster;
 import com.time.ttest.event.ApplicationRunningEvent;
 import com.time.ttest.event.ApplicationStartedEvent;
@@ -24,7 +25,7 @@ public class EventPublishingRunListener implements ApplicationRunListener {
     }
 
     @Override
-    public void running(ConfigurableApplicationContext context) {
-        context.publishEvent(new ApplicationRunningEvent(this.application,context));
+    public void running(TTestContext context) {
+        context.publishEvent(new ApplicationRunningEvent(this.application, (TTestApplicationContext) context));
     }
 }

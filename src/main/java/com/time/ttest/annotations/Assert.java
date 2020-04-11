@@ -1,6 +1,9 @@
 package com.time.ttest.annotations;
 
 
+import com.time.ttest.asserts.AssertInterceptor;
+import com.time.ttest.asserts.TAssertType;
+
 import java.lang.annotation.*;
 
 /**
@@ -23,12 +26,23 @@ public @interface Assert {
     /**
      * 预期结果
      */
-    String expect();
+    String expect() default "";
 
     /**
-     * 预期结果的类型
-     * 校验时会将 expect 转换
-     * {@link com.time.ttest.interceptor.AssertInterceptor}
+     * 预期结果的json-path
+     * @return
      */
-    Class transform() default String.class;
+    String expectPath() default "$";
+
+    /**
+     * 使用的校验类型
+     * @return
+     */
+    TAssertType assertType() default TAssertType.Equals;
+
+    /**
+     * 校验失败抛出异常信息
+     * @return
+     */
+    String errorMsg() default "";
 }

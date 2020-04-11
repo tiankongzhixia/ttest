@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Singleton
-public abstract class AbstractApplicationContext implements ConfigurableApplicationContext {
+public abstract class AbstractApplicationContext implements TTestContext {
 
     private final Set<ApplicationListener<?>> applicationListeners;
     private ApplicationEventMulticaster applicationEventMulticaster;

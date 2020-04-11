@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-03-18 23:34
  */
 public class DataProviderFileHolder {

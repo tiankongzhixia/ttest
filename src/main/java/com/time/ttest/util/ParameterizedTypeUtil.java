@@ -8,12 +8,16 @@ import java.util.List;
 
 /**
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-03-22 23:45
  */
 public class ParameterizedTypeUtil {
 
-    public static Type generateList(Class target){
-        return ParameterizedTypeImpl.make(List.class, new Type[]{TypeToken.get(target).getType()}, null);
+    public static Type generateList(Class generic){
+        return ParameterizedTypeImpl.make(List.class, new Type[]{TypeToken.get(generic).getType()}, null);
+    }
+
+    public static Type generateGeneric(Class target,Class generic){
+        return ParameterizedTypeImpl.make(target, new Type[]{TypeToken.get(generic).getType()}, null);
     }
 }

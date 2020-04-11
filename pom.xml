@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.timemf</groupId>
     <artifactId>t-test</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <name>TTest</name>
     <url>https://github.com/tiankongzhixia/ttest</url>
@@ -63,6 +63,7 @@
         <commons.version>3.9</commons.version>
         <json-path.version>2.4.0</json-path.version>
         <paranamer.version>2.8</paranamer.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
     </properties>
 
 
@@ -87,6 +88,11 @@
             <groupId>com.konghq</groupId>
             <artifactId>unirest-java</artifactId>
             <version>${unirest.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

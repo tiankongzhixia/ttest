@@ -1,7 +1,8 @@
 package com.time.ttest.event;
 
 import com.time.ttest.TTestApplication;
-import com.time.ttest.context.ConfigurableApplicationContext;
+import com.time.ttest.context.TTestApplicationContext;
+import com.time.ttest.context.TTestContext;
 import lombok.Getter;
 
 /**
@@ -11,10 +12,10 @@ import lombok.Getter;
  */
 public class ApplicationRunningEvent extends TTestApplicationEvent {
     @Getter
-    private final ConfigurableApplicationContext configurableApplicationContext;
+    private final TTestContext TTestContext;
 
-    public ApplicationRunningEvent(TTestApplication application,  ConfigurableApplicationContext configurableApplicationContext) {
+    public ApplicationRunningEvent(TTestApplication application,  TTestApplicationContext TTestContext) {
         super(application);
-        this.configurableApplicationContext = configurableApplicationContext;
+        this.TTestContext = TTestContext;
     }
 }

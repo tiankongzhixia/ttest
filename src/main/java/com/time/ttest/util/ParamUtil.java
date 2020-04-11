@@ -2,6 +2,7 @@ package com.time.ttest.util;
 
 import com.thoughtworks.paranamer.BytecodeReadingParanamer;
 import com.thoughtworks.paranamer.Paranamer;
+import io.qameta.allure.util.NamingUtils;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -48,5 +49,15 @@ public class ParamUtil {
             return params.getOrDefault(pattern,template);
         }
         return template;
+    }
+
+    public static String processNameTemplate(final String template,final Method method, final Object... args) {
+        Map<String,Object> params = getParametersMap(method, args);
+        return NamingUtils.processNameTemplate(template,params);
+    }
+
+    public static Boolean isProcessNameTemplate(final String template){
+        final Matcher matcher = Pattern.compile("\\{([^}]*)}").matcher(template);
+        return matcher.find();
     }
 }

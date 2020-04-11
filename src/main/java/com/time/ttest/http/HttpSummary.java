@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 /**
  * http请求摘要
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-03-03 12:06
  */
 @Data

@@ -1,10 +1,10 @@
-package com.time.ttest;
+package com.time.ttest.file;
 
 import java.util.NoSuchElementException;
 
 /**
  * @Auther guoweijie
- * @Email 877502087@qq.com
+
  * @Date 2020-03-18 23:17
  */
 public enum FileSubSuffix {
