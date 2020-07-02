@@ -53,7 +53,7 @@
         <mybatis.guice.version>3.11</mybatis.guice.version>
         <reflections.version>0.9.11</reflections.version>
         <druid.version>1.1.21</druid.version>
-        <mysql.version>5.1.48</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <mybatis.version>3.5.4</mybatis.version>
         <snakeyaml.version>1.25</snakeyaml.version>
         <mybatis-plus.version>3.3.1.tmp</mybatis-plus.version>
